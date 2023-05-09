@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{%load static %}
+
+{% block content %}
+<section class="vh-100" style="background-color: #9A616D;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="{%static 'images/background.jpg'%} "
+                  alt="login form" class="img-fluid" style="width:100%;height: 100%; border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div>
+                                <p>{{ field.label }}: <br> {{ field }}</p> 
+                    
+                                {% for error in field.errors %}
+                                    <small style="color: red">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-warning btn-lg ms-2">Register</button>
+                        <a class="btn btn-warning btn-lg ms-2" href="{% url 'login' %}">Login</a>
+                        <a class="btn btn-warning btn-lg ms-2" href="{% url 'home' %}">Home</a>
+                    </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

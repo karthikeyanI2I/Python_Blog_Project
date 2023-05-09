@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block contentnav %}
+{%endblock%}
+{% block content %}
+    <br>
+    <div class="alert alert-success" role="alert">
+        <h2 style="text-align: center;">Logged out! <a href="{% url 'login' %}">ClickLogin</a>
+            or <a href="{% url 'home' %}"> Home</a> <br></h2>
+    </div>
+
+{% endblock content %}
