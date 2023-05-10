@@ -13,9 +13,11 @@
 {% block content %}
 
 <div class="container mt-2 mb-2 pt-5 pb-5 px-4" id="article-grid">
-	<div class="row justify-content-center gx-5">
-        {% for bloglist in bloglists %}  
-		<div class="card article-card p-3" style="width: 18rem;">
+	<div class="row">
+        {% for bloglist in bloglists %} 
+		<div class="col-sm-4"> 
+		<div class="card article-card">
+		{% comment %} <div class="card article-card p-3" style="width: 18rem;"> {% endcomment %}
 		<img class="card-img-top" src="{{ bloglist.image.url }}" alt="Card image cap">
 		<div class="card-body">
 		  <h5 class="card-title">{{ bloglist.title }}</h5>
@@ -26,7 +28,9 @@
 			<a href="/edit/{{ bloglist.id }}"><i class="bi bi-pen"></i>Edit</a>
 			{% endif %}
 		</div>
-	  </div>
+	</div>
+	  {% comment %} </div> {% endcomment %}
+	</div>
        {% endfor %} 
 	</div> <!-- Article Grid Row Ends -->
 </div> <!-- Article Grid Container Ends -->
