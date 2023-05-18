@@ -24,6 +24,9 @@
 	padding: 0;
 }
 
+.card-img-top{
+	height: 150px;
+}
 .hero-img {
 	max-width: 540px !important;
 	height: 540px;

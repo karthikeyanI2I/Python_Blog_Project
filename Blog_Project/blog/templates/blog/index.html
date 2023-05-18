@@ -1,7 +1,7 @@
 
 {% extends "blog/base.html" %}
  
-{% block title %}Add New To_do List Records{% endblock title %}
+{% block title %}Add New Blog{% endblock title %}
 {% block contentnav %}
 {% include 'blog/navbar.html' %} 
 {%endblock%}
@@ -12,6 +12,7 @@
    
  <form method="POST" class="post-form" enctype="multipart/form-data" action="/addnew" > 
    {% csrf_token %}  
+   
   <div class="container">  
  <br>  
   <div class="form-group row">  
@@ -20,22 +21,14 @@
   </div>  
    </div>  
    
-   <div class="form-group row">  
-  <label class="col-sm-2 col-form-label">Title:</label>  
-  <div class="col-sm-4">  
-    {{ form.title }}  
-  </div>  
-   </div>  
+    
   <div class="form-group row">  
-  <label class="col-sm-2 col-form-label">Content:</label>  
+  
   <div class="col-sm-4">  
-    {{ form.content }}  
-  </div>  
-   </div>  
-  <div class="form-group row">  
-  <label class="col-sm-2 col-form-label">Image:</label>  
-  <div class="col-sm-4">  
-    {{ form.image }}  
+  
+    {% for fm in form  %}
+    {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} <br>
+{% endfor %}
   </div>  
    </div>  
   <div class="form-group row">  
@@ -47,6 +40,7 @@
    </div>  
   </div>  
  </form>  
+ 
 </div> 
 {% else %}
     <div class="alert alert-success" role="alert">

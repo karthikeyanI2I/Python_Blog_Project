@@ -1,0 +1,13 @@
+[image_validation]
+image_size = 3145728
+image_formats = ["jpg", "png","jpeg"]
+image_size_error = "Please upload an image file smaller than 3MB."
+image_format_error = "Please upload a JPG or PNG image."
+
+[database]
+engine = 'django.db.backends.postgresql'
+name =  'blog_db'
+user = 'postgres'
+password = 'admin'
+host = '127.0.0.1'
+port = '5432'

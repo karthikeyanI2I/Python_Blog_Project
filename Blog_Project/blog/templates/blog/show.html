@@ -1,27 +1,35 @@
-
 {% extends "blog/base.html" %}
 {%load static %}
+{% load base64_encode %}
 {%block css_files%}
 <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
 {%endblock%}
 {% block title %}Add New To_do list Records{% endblock title %}
  
-
 {% block contentnav %}
 {% include 'blog/navbar.html' %} 
 {%endblock%}
-{% block content %}
 
+{% block content %}
 <div class="container mt-2 mb-2 pt-5 pb-5 px-4" id="article-grid">
 	<div class="row">
         {% for bloglist in bloglists %} 
 		<div class="col-sm-4"> 
 		<div class="card article-card">
 		{% comment %} <div class="card article-card p-3" style="width: 18rem;"> {% endcomment %}
-		<img class="card-img-top" src="{{ bloglist.image.url }}" alt="Card image cap">
+		<a href="#" id="{{ bloglist.id }}" class="btn btn-primary disclick" data-bs-toggle="modal"  data-bs-target="#exampleModal">
+		<img class="card-img-top" src="data:image/jpeg;base64, {{bloglist.image_data|base64_encode}}" alt="Card image cap">
+		</a>
 		<div class="card-body">
 		  <h5 class="card-title">{{ bloglist.title }}</h5>
-		  <p class="card-text">{{ bloglist.content }}</p>
+		  <p class="card-text">			
+			{% if bloglist.content|length > 30  %}
+				{{ bloglist.content| slice:20 }} 
+				<a href="#" id="{{ bloglist.id }}" class = "disclick" data-bs-toggle="modal"  data-bs-target="#readmodel">Read more..</a>
+			{%else%}
+			{{ bloglist.content }}
+			{%endif%}
+		  </p>
 		</div>
 		<div class="card-body">
 			{% if request.user.is_authenticated %} 
@@ -34,5 +42,59 @@
        {% endfor %} 
 	</div> <!-- Article Grid Row Ends -->
 </div> <!-- Article Grid Container Ends -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="title"></h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		  </div>
+		  <div class="modal-body" id="discontent">
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+  </div>
 
+  <!-- Modal -->
+<div class="modal fade" id="readmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		  </div>
+		  <div class="modal-body" id="discontent1">
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+  </div>
 {% endblock content %}
+
+{%block javascript%}
+<script type="text/javascript">
+    $(document).ready(function () {
+		$(document).on('click', '.disclick', function (e) {
+			let id = $(this).attr('id');
+			$.ajax({
+				url: '{% url 'display' %}',
+				data : {
+					foo: id,
+				},
+				success: function (data) {
+					$("#title").html('').append(data.title[0].title);
+					$("#discontent").html('').append(data.title[0].content);
+					$("#discontent1").html('').append(data.title[0].content);
+				}
+			});
+		});
+	});   
+</script>
+{%endblock%}

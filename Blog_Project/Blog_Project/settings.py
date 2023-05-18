@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import tomllib
+
+# Load the TOML file
+with open('config.toml', 'rb') as toml_file:
+    config = tomllib.load(toml_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,12 +81,12 @@ WSGI_APPLICATION = 'Blog_Project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blogapp_db',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'ENGINE':config['database']['engine'],
+        'NAME':config['database']['name'],
+        'USER':config['database']['user'],
+        'PASSWORD':config['database']['password'],
+        'HOST':config['database']['host'],
+        'PORT':config['database']['port']
     }
 }
 
